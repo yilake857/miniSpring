@@ -3,20 +3,22 @@ package org.github.springframework.beans.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.github.springframework.beans.BeansException;
+
 /**
+ * bean容器
  * @author zhaoyu
  * Created on 2023-11-07
  */
-public class BeanFactory {
-    private Map<String, Object> beanMap = new HashMap<>();
-
-    public void registerBean(String name, Object bean) {
-        beanMap.put(name, bean);
-    }
-
-    public Object getBean(String name) {
-        return beanMap.get(name);
-    }
+public interface BeanFactory {
+    /**
+     * 获取bean
+     *
+     * @param name
+     * @return
+     * @throws BeansException bean不存在时
+     */
+    Object getBean(String name) throws BeansException;
 
 
 }

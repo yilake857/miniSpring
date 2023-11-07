@@ -2,7 +2,8 @@ package org.springframework.beans.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.github.springframework.beans.factory.BeanFactory;
+import org.github.springframework.beans.factory.config.BeanDefinition;
+import org.github.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.junit.Test;
 
 /**
@@ -12,16 +13,13 @@ import org.junit.Test;
 public class BeanFactoryTest {
     @Test
     public void testGetBean() throws Exception {
-        BeanFactory beanFactory = new BeanFactory();
-        beanFactory.registerBean("helloService", new HelloService());
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        BeanDefinition beanDefinition = new BeanDefinition(HelloService.class);
+        beanFactory.registerBeanDefinition("helloService", beanDefinition);
+
         HelloService helloService = (HelloService) beanFactory.getBean("helloService");
         helloService.sayHello();
     }
 
-    public class HelloService {
-        public String sayHello() {
-            System.out.println("hello");
-            return "hello";
-        }
-    }
+
 }
