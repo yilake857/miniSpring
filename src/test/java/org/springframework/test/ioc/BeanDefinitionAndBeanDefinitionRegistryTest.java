@@ -1,4 +1,4 @@
-package org.springframework.beans.factory;
+package org.springframework.test.ioc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author zhaoyu
  * Created on 2023-11-07
  */
-public class BeanFactoryTest {
+public class BeanDefinitionAndBeanDefinitionRegistryTest {
     @Test
     public void testGetBean() throws Exception {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
