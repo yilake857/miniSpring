@@ -31,3 +31,10 @@ beanClass.newInstance()来实例化，仅适用于bean有无参构造函数的�
 > 分支：populate-bean-with-property-values
 
 在BeanDefinition中增加和bean属性对应的PropertyVales，实例化bean之后，为bean填充属性(AbstractAutowireCapableBeanFactory#applyPropertyValues)。
+
+
+## 为bean注入bean
+> 分支：populate-bean-with-bean
+
+增加BeanReference类，包装一个bean对另一个bean的引用。实例化beanA后填充属性时，若PropertyValue#value为BeanReference，引用beanB，则先去实例化beanB。
+由于不想增加代码的复杂度提高理解难度，暂时不支持循环依赖，后面会在高级篇中解决该问题。
