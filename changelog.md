@@ -26,3 +26,8 @@ beanClass.newInstance()来实例化，仅适用于bean有无参构造函数的�
 针对bean的实例化，抽象出一个实例化策略的接口InstantiationStrategy，有两个实现类：
 - SimpleInstantiationStrategy，使用bean的构造函数来实例化
 - CglibSubclassingInstantiationStrategy，使用CGLIB动态生成子类
+
+## 为bean填充属性
+> 分支：populate-bean-with-property-values
+
+在BeanDefinition中增加和bean属性对应的PropertyVales，实例化bean之后，为bean填充属性(AbstractAutowireCapableBeanFactory#applyPropertyValues)。

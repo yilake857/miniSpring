@@ -3,6 +3,9 @@ package org.github.springframework.beans.factory.support;
 import org.github.springframework.beans.BeansException;
 import org.github.springframework.beans.factory.config.BeanDefinition;
 
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+
 /**
  * @author zhaoyu
  * Created on 2023-11-13
@@ -17,8 +20,10 @@ public class CglibSubclassingInstantiationStrategy implements InstantiationStrat
      */
     @Override
     public Object instantiate(BeanDefinition beanDefinition) throws BeansException {
-        Class beanClass = beanDefinition.getBeanClass();
         //TODO 感兴趣的小伙伴可以实现下
-        throw new UnsupportedOperationException("CGLIB instantiation strategy is not supported");
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(beanDefinition.getBeanClass());
+        enhancer.setCallback((MethodInterceptor) (obj, method, argsTemp, proxy) -> proxy.invokeSuper(obj,argsTemp));
+        return enhancer.create();
     }
 }
