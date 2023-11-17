@@ -38,3 +38,16 @@ beanClass.newInstance()来实例化，仅适用于bean有无参构造函数的�
 
 增加BeanReference类，包装一个bean对另一个bean的引用。实例化beanA后填充属性时，若PropertyValue#value为BeanReference，引用beanB，则先去实例化beanB。
 由于不想增加代码的复杂度提高理解难度，暂时不支持循环依赖，后面会在高级篇中解决该问题。
+
+## 资源和资源加载器
+> 分支：resource-and-resource-loader
+
+Resource是资源的抽象和访问接口，简单写了三个实现类
+
+![](./assets/resource.png)
+
+- FileSystemResource，文件系统资源的实现类
+- ClassPathResource，classpath下资源的实现类
+- UrlResource，对java.net.URL进行资源定位的实现类
+
+ResourceLoader接口则是资源查找定位策略的抽象，DefaultResourceLoader是其默认实现类
