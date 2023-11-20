@@ -34,4 +34,11 @@ public interface BeanDefinitionRegistry {
      */
     boolean containsBeanDefinition(String beanName);
 
+    /**
+     * 返回定义的所有bean的名称
+     *
+     * @return
+     */
+    String[] getBeanDefinitionNames();
+
 }
