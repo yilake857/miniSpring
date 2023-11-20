@@ -2,6 +2,7 @@ package org.github.springframework.beans.factory.support;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.github.springframework.beans.BeansException;
 import org.github.springframework.beans.factory.ConfigurableListableBeanFactory;
@@ -48,6 +49,12 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
             }
         });
         return result;
+    }
+
+    @Override
+    public String[] getBeanDefinitionNames() {
+        Set<String> beanNames = beanDefinitionMap.keySet();
+        return beanNames.toArray(new String[beanNames.size()]);
     }
 
     @Override
