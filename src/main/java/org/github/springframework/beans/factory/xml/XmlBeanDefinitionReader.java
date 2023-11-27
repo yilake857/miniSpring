@@ -65,7 +65,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             } finally {
                 inputStream.close();
             }
-        } catch (IOException ex) {
+        } catch (IOException | DocumentException ex) {
             throw new BeansException("IOException parsing XML document from " + resource, ex);
         }
     }

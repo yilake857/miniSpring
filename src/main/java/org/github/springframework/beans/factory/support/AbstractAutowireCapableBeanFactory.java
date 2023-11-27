@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import org.github.springframework.beans.BeansException;
 import org.github.springframework.beans.PropertyValue;
+import org.github.springframework.beans.factory.BeanFactoryAware;
 import org.github.springframework.beans.factory.DisposableBean;
 import org.github.springframework.beans.factory.InitializingBean;
 import org.github.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -102,6 +103,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     protected Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition){
+        if (bean instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
+
         //执行BeanPostProcessor的前置处理
         Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
 
