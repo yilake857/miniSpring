@@ -1,5 +1,6 @@
 package org.github.springframework.beans.factory.support;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,8 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
     }
 
     public void destroySingletons() {
-        Set<String> beanNames = disposableBeans.keySet();
+//        Set<String> beanNames = disposableBeans.keySet(); 为什么去重 后来用不去重了
+        ArrayList<String> beanNames = new ArrayList<>(disposableBeans.keySet());
         for (String beanName : beanNames) {
             DisposableBean disposableBean = disposableBeans.remove(beanName);
             try {
