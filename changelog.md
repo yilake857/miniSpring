@@ -27,6 +27,15 @@ beanClass.newInstance()来实例化，仅适用于bean有无参构造函数的�
 - SimpleInstantiationStrategy，使用bean的构造函数来实例化
 - CglibSubclassingInstantiationStrategy，使用CGLIB动态生成子类
 
+
+**Spring Bean的实例化策略**是由InstantiationStrategy接口定义的，根据创建对象情况的不同，提供了三种策略：
+
+- **无参构造方法**：这是最常见的实例化策略，Spring默认的实例化方法就是无参构造函数实例化。例如，我们在xml里定义的 <bean id=\"xxx\" class=\"yyy\"/> 以及用注解标识的bean都是通过默认实例化方法实例化的14。
+
+- **有参构造方法**：如果Bean的定义信息中包含了构造函数的参数，那么Spring会使用有参构造方法来实例化Bean14。
+
+- **工厂方法**：如果Bean的定义信息中指定了工厂方法，那么Spring会调用该工厂方法来实例化Bean14。
+
 ## 为bean填充属性
 > 分支：populate-bean-with-property-values
 
@@ -110,3 +119,28 @@ Aware是感知、意识的意思，Aware接口是标记性接口，其实现子�
 至止，bean的生命周期如下：
 
 ![](./assets/aware-interface.png)
+
+## bean作用域，增加prototype的支持
+> 分支：prototype-bean
+
+每次向容器获取prototype作用域bean时，容器都会创建一个新的实例。在BeanDefinition中增加描述bean的作用域的字段scope/singleton/prototype，创建prototype作用域bean时（AbstractAutowireCapableBeanFactory#doCreateBean），不往singletonObjects中增加该bean。prototype作用域bean不执行销毁方法，查看AbstractAutowireCapableBeanFactory#registerDisposableBeanIfNecessary方法。
+
+
+
+至止，bean的生命周期如下：
+
+![](./assets/prototype-bean.png)
+
+**Spring框架中有以下几种作用域**：
+
+- **Singleton**：这是Spring的默认作用域。在这个作用域中，Spring容器只会创建一个实例，所有对该bean的请求都将返回这个唯一的实例。这种作用域非常适合对于无状态的Bean，比如工具类或服务类。
+
+- **Prototype**：每次请求都会创建一个新的Bean实例，适合对于需要维护状态的Bean。
+
+- **Request**：在Web应用中，为每个HTTP请求创建一个Bean实例。适合在一个请求中需要维护状态的场景，如跟踪用户行为信息。
+
+- **Session**：在Web应用中，为每个HTTP会话创建一个Bean实例。适合需要在多个请求之间维护状态的场景，如用户会话。
+
+- **Application**：在整个Web应用期间，创建一个Bean实例。适合存储全局的配置数据等。
+
+- **WebSocket**：在每个WebSocket会话中创建一个Bean实例。适合WebSocket通信场景。
