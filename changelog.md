@@ -168,3 +168,11 @@ FactoryBean是一种特殊的bean，当向容器获取该bean时，容器不是�
 - 当我们在Spring配置文件中定义一个`FactoryBean`时，实际上创建的是这个工厂Bean本身。
 - 当需要使用这个Bean时，Spring容器会调用`FactoryBean`的`getObject()`方法来获取由工厂Bean产生的实例对象。
 
+
+## 容器事件和时间监听器
+> 分支：event-and-event-listener
+
+ApplicationContext容器提供了完善的时间发布和时间监听功能。
+
+ApplicationEventMulticaster接口是注册监听器和发布事件的抽象，AbstractApplicationContext包含其实现类实例作为其属性，使得ApplicationContext容器具有注册监听器和发布事件的能力。在AbstractApplicationContext#refresh方法中，会实例化ApplicationEventMulticaster、注册监听器并发布容器刷新事件ContextRefreshedEvent；在AbstractApplicationContext#doClose方法中，发布容器关闭事件ContextClosedEvent。
+
