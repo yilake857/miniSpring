@@ -144,3 +144,27 @@ Aware是感知、意识的意思，Aware接口是标记性接口，其实现子�
 - **Application**：在整个Web应用期间，创建一个Bean实例。适合存储全局的配置数据等。
 
 - **WebSocket**：在每个WebSocket会话中创建一个Bean实例。适合WebSocket通信场景。
+
+## FactoryBean
+> 分支：factory-bean
+
+FactoryBean是一种特殊的bean，当向容器获取该bean时，容器不是返回其本身，而是返回其FactoryBean#getObject方法的返回值，可通过编码方式定义复杂的bean。
+
+实现逻辑比较简单，当容器发现bean为FactoryBean类型时，调用其getObject方法返回最终bean。当FactoryBean#isSingleton==true，将最终bean放进缓存中，下次从缓存中获取。改动点见AbstractBeanFactory#getBean。
+
+注意区分FactoryBean和BeanFactory:  
+`BeanFactory`和`FactoryBean`在Spring框架中都扮演着重要的角色，但它们的功能和用途有所不同。
+
+**BeanFactory**：
+- `BeanFactory`是Spring容器的顶级接口，给具体的IOC容器的实现提供了规范。
+- 它是Spring框架的基础，提供了依赖注入和控制反转等重要特性。
+- `BeanFactory`负责根据配置信息创建和维护Bean对象的生命周期。
+- 它使用了延迟初始化和懒加载的策略，只有在需要时才会创建Bean实例。
+
+**FactoryBean**：
+- `FactoryBean`是一个特殊的Bean，它实现了Spring的`FactoryBean`接口。
+- 通过实现这个接口，我们可以自定义Bean的创建过程，灵活地控制Bean的实例化和配置。
+- `FactoryBean`的实现类是一个工厂，它负责产生其他Bean的实例。
+- 当我们在Spring配置文件中定义一个`FactoryBean`时，实际上创建的是这个工厂Bean本身。
+- 当需要使用这个Bean时，Spring容器会调用`FactoryBean`的`getObject()`方法来获取由工厂Bean产生的实例对象。
+

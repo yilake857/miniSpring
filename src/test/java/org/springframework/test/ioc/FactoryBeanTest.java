@@ -15,7 +15,7 @@ public class FactoryBeanTest {
     @Test
     public void testFactoryBean(){
         ClassPathXmlApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("factory-bean.xml");
+                new ClassPathXmlApplicationContext("classpath:factory-bean.xml");
         Car car = applicationContext.getBean("car", Car.class);
         assertThat(car.getBrand()).isEqualTo("porsche");
 
