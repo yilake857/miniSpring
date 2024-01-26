@@ -1,4 +1,4 @@
-package org.springframework.test.ioc.service;
+package org.springframework.test.service;
 
 import org.github.springframework.beans.BeansException;
 import org.github.springframework.beans.factory.BeanFactory;

@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.github.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.github.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.junit.Test;
-import org.springframework.test.ioc.bean.Car;
-import org.springframework.test.ioc.bean.Person;
+import org.springframework.test.bean.Car;
+import org.springframework.test.bean.Person;
 
 /**
  * @author zhaoyu

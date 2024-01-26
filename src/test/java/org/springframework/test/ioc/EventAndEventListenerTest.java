@@ -2,7 +2,7 @@ package org.springframework.test.ioc;
 
 import org.github.springframework.context.support.ClassPathXmlApplicationContext;
 import org.junit.Test;
-import org.springframework.test.ioc.common.event.CustomEvent;
+import org.springframework.test.common.event.CustomEvent;
 
 /**
  * @author zhaoyu

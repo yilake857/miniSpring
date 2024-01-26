@@ -1,4 +1,4 @@
-package org.springframework.test.ioc.bean;
+package org.springframework.test.bean;
 
 import org.github.springframework.beans.factory.DisposableBean;
 import org.github.springframework.beans.factory.InitializingBean;
