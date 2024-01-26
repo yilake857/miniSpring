@@ -188,3 +188,9 @@ Joinpoint，织入点，指需要执行代理操作的某个类的某个方法(�
 > 分支：jdk-dynamic-proxy
 
 AopProxy是获取代理对象的抽象接口，JdkDynamicAopProxy的基于JDK动态代理的具体实现。TargetSource，被代理对象的封装。MethodInterceptor，方法拦截器，是AOP Alliance的"公民"，顾名思义，可以拦截方法，可在被代理执行的方法前后增加代理行为。
+
+
+## 基于CGLIB的动态代理
+> 分支：cglib-dynamic-proxy
+
+基于CGLIB的动态代理实现逻辑也比较简单，查看CglibAopProxy。与基于JDK的动态代理在运行期间为接口生成对象的代理对象不同，基于CGLIB的动态代理能在运行期间动态构建字节码的class文件，为类生成子类，因此被代理类不需要继承自任何接口。
