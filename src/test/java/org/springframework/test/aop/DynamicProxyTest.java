@@ -1,9 +1,12 @@
 package org.springframework.test.aop;
 
+import org.aopalliance.intercept.MethodInterceptor;
 import org.github.springframework.aop.AdvisedSupport;
+import org.github.springframework.aop.ClassFilter;
 import org.github.springframework.aop.MethodMatcher;
 import org.github.springframework.aop.TargetSource;
 import org.github.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.github.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.github.springframework.aop.framework.CglibAopProxy;
 import org.github.springframework.aop.framework.JdkDynamicAopProxy;
 import org.github.springframework.aop.framework.ProxyFactory;
@@ -98,6 +101,32 @@ public class DynamicProxyTest {
 
         WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
         proxy.explode();
+    }
+
+    @Test
+    public void testAdvisor() throws Exception{
+        WorldService worldService = new WorldServiceImpl();
+
+        String expression = "execution(* org.springframework.test.service.WorldService.explode(..))";
+        AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
+        advisor.setExpression(expression);
+        MethodAfterAdviceInterceptor adviceInterceptor = new MethodAfterAdviceInterceptor(new WorldServiceAfterAdvice());
+        advisor.setAdvice(adviceInterceptor);
+
+
+        ClassFilter classFilter = advisor.getPointcut().getClassFilter();
+        if (classFilter.matches(worldService.getClass())){
+            AdvisedSupport advisedSupport = new AdvisedSupport();
+
+            TargetSource targetSource = new TargetSource(worldService);
+            advisedSupport.setTargetSource(targetSource);
+            advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
+            advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
+//			advisedSupport.setProxyTargetClass(true);   //JDK or CGLIB
+
+            WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
+            proxy.explode();
+        }
     }
 
 
