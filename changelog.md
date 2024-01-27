@@ -211,3 +211,8 @@ Spring将AOP联盟中的Advice细化出各种类型的Advice，常用的有Befor
 - [x] AfterReturningAdvice –> @AfterReturning return
 - [x] ThrowsAdvice         –> @AfterThrowing  try catch
 - [x] AroundAdvice         –> @Around         实现MethodInterceptor接口即可
+
+## PointcutAdvisor：Pointcut和Advice的组合
+> 分支：pointcut-advisor
+
+Advisor是包含一个Pointcut和一个Advice的组合，Pointcut用于捕获JoinPoint，Advice决定在JoinPoint执行某种操作。实现了一个支持aspectj表达式的AspectJExpressionPointcutAdvisor。
