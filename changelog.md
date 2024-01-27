@@ -194,3 +194,20 @@ AopProxy是获取代理对象的抽象接口，JdkDynamicAopProxy的基于JDK动
 > 分支：cglib-dynamic-proxy
 
 基于CGLIB的动态代理实现逻辑也比较简单，查看CglibAopProxy。与基于JDK的动态代理在运行期间为接口生成对象的代理对象不同，基于CGLIB的动态代理能在运行期间动态构建字节码的class文件，为类生成子类，因此被代理类不需要继承自任何接口。
+
+
+## AOP代理工厂
+> 分支：proxy-factory
+
+增加AOP代理工厂ProxyFactory，由AdvisedSupport#proxyTargetClass属性决定使用JDK动态代理还是CGLIB动态代理。
+
+## 几种常用的Advice：BeforeAdvice/AfterAdvice/AfterReturningAdvice/ThrowsAdvice...
+> 分支： common-advice
+
+Spring将AOP联盟中的Advice细化出各种类型的Advice，常用的有BeforeAdvice/AfterAdvice/AfterReturningAdvice/ThrowsAdvice，我们可以通过扩展MethodInterceptor来实现。
+
+只简单实现BeforeAdvice，有兴趣的同学可以帮忙实现另外几种Advice。定义MethodBeforeAdviceInterceptor拦截器，在执行被代理方法之前，先执行BeforeAdvice的方法。
+- [x] BeforeAdvice
+- [ ] AfterAdvice
+- [ ] AfterReturningAdvice
+- [ ] ThrowsAdvice   
