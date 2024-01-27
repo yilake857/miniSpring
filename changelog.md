@@ -206,8 +206,12 @@ AopProxy是获取代理对象的抽象接口，JdkDynamicAopProxy的基于JDK动
 
 Spring将AOP联盟中的Advice细化出各种类型的Advice，常用的有BeforeAdvice/AfterAdvice/AfterReturningAdvice/ThrowsAdvice，我们可以通过扩展MethodInterceptor来实现。
 
-只简单实现BeforeAdvice，有兴趣的同学可以帮忙实现另外几种Advice。定义MethodBeforeAdviceInterceptor拦截器，在执行被代理方法之前，先执行BeforeAdvice的方法。
 - [x] BeforeAdvice
-- [ ] AfterAdvice
-- [ ] AfterReturningAdvice
-- [ ] ThrowsAdvice   
+- [x] AfterAdvice
+- [ ] AfterReturningAdvice 
+- [ ] ThrowsAdvice    try catch
+- MethodBeforeAdviceInterceptor –> @Before
+- AspectJAroundAdvice –> @Around
+- AspectJAfterAdvice –> @After
+- AspectJAfterReturningAdvice –> @AfterReturning
+- AspectJAfterThrowingAdvice –> @AfterThrowing

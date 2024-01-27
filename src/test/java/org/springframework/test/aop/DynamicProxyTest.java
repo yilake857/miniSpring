@@ -7,9 +7,13 @@ import org.github.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.github.springframework.aop.framework.CglibAopProxy;
 import org.github.springframework.aop.framework.JdkDynamicAopProxy;
 import org.github.springframework.aop.framework.ProxyFactory;
+import org.github.springframework.aop.framework.adapter.MethodAfterAdviceInterceptor;
+import org.github.springframework.aop.framework.adapter.MethodAfterReturningAdviceInterceptor;
 import org.github.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.common.WorldServiceAfterAdvice;
+import org.springframework.test.common.WorldServiceAfterReturningAdvice;
 import org.springframework.test.common.WorldServiceBeforeAdvice;
 import org.springframework.test.common.WorldServiceInterceptor;
 import org.springframework.test.service.WorldService;
@@ -69,6 +73,27 @@ public class DynamicProxyTest {
         //设置BeforeAdvice
         WorldServiceBeforeAdvice beforeAdvice = new WorldServiceBeforeAdvice();
         MethodBeforeAdviceInterceptor methodInterceptor = new MethodBeforeAdviceInterceptor(beforeAdvice);
+        advisedSupport.setMethodInterceptor(methodInterceptor);
+
+        WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
+        proxy.explode();
+    }
+
+    @Test
+    public void testAfterAdvice() throws Exception {
+        //设置AfterAdvice
+        WorldServiceAfterAdvice afterAdvice = new WorldServiceAfterAdvice();
+        MethodAfterAdviceInterceptor methodInterceptor = new MethodAfterAdviceInterceptor(afterAdvice);
+        advisedSupport.setMethodInterceptor(methodInterceptor);
+
+        WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
+        proxy.explode();
+    }
+    @Test
+    public void testAfterReturningAdvice() throws Exception {
+        //设置AfterAdvice
+        WorldServiceAfterReturningAdvice afterAdvice = new WorldServiceAfterReturningAdvice();
+        MethodAfterReturningAdviceInterceptor methodInterceptor = new MethodAfterReturningAdviceInterceptor(afterAdvice);
         advisedSupport.setMethodInterceptor(methodInterceptor);
 
         WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
