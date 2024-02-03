@@ -234,3 +234,10 @@ DefaultAdvisorAutoProxyCreator是处理横切逻辑的织入返回代理对象�
 经常需要将配置信息配置在properties文件中，然后在XML文件中以占位符的方式引用。
 
 实现思路很简单，在bean实例化之前，编辑BeanDefinition，解析XML文件中的占位符，然后用properties文件中的配置值替换占位符。而BeanFactoryPostProcessor具有编辑BeanDefinition的能力，因此PropertyPlaceholderConfigurer继承自BeanFactoryPostProcessor。
+
+## 包扫描
+> 分支：package-scan
+
+结合bean的生命周期，包扫描只不过是扫描特定注解的类，提取类的相关信息组装成BeanDefinition注册到容器中。
+
+在XmlBeanDefinitionReader中解析**```<context:component-scan />```**标签，扫描类组装BeanDefinition然后注册到容器中的操作在ClassPathBeanDefinitionScanner#doScan中实现。
