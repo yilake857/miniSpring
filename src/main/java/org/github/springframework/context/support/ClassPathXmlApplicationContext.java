@@ -33,6 +33,7 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
         refresh();
     }
 
+    @Override
     protected String[] getConfigLocations() {
         return this.configLocations;
     }

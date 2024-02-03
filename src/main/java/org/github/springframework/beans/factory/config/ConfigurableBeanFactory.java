@@ -1,7 +1,7 @@
 package org.github.springframework.beans.factory.config;
 
-import org.github.springframework.beans.factory.BeanFactory;
 import org.github.springframework.beans.factory.HierarchicalBeanFactory;
+import org.github.springframework.util.StringValueResolver;
 
 /**
  * @author zhaoyu
@@ -18,4 +18,9 @@ public interface ConfigurableBeanFactory  extends HierarchicalBeanFactory, Singl
      * 销毁单例bean
      */
     void destroySingletons();
+
+    void addEmbeddedValueResolver(StringValueResolver valueResolver);
+
+    String resolveEmbeddedValue(String value);
+
 }
