@@ -1,8 +1,5 @@
 package org.github.springframework.beans.factory;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.github.springframework.beans.BeansException;
 
 /**
@@ -30,5 +27,7 @@ public interface BeanFactory {
      * @throws BeansException
      */
     <T> T getBean(String name, Class<T> requiredType) throws BeansException;
+
+    <T> T getBean(Class<T> requiredType) throws BeansException;
 
 }

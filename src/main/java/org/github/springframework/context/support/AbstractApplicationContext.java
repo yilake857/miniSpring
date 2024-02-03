@@ -1,8 +1,5 @@
 package org.github.springframework.context.support;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.github.springframework.beans.BeansException;
 import org.github.springframework.beans.factory.ConfigurableListableBeanFactory;
 import org.github.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -15,6 +12,9 @@ import org.github.springframework.context.event.ContextClosedEvent;
 import org.github.springframework.context.event.ContextRefreshedEvent;
 import org.github.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.github.springframework.core.io.DefaultResourceLoader;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author zhaoyu
@@ -128,7 +128,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         return getBeanFactory().getBeansOfType(type);
     }
 
-
+    public <T> T getBean(Class<T> requiredType) throws BeansException {
+        return getBeanFactory().getBean(requiredType);
+    }
 
     public Object getBean(String name) throws BeansException {
         return getBeanFactory().getBean(name);
