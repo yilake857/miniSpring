@@ -4,8 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="worldService" class="org.springframework.test.service.WorldServiceImpl"/>
-
+    <bean id="worldService" class="org.springframework.test.service.WorldServiceImpl">
+        <property name="name" value="earth"/>
+    </bean>
 
     <bean class="org.github.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
 
