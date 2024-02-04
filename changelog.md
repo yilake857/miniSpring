@@ -253,3 +253,18 @@ DefaultAdvisorAutoProxyCreator是处理横切逻辑的织入返回代理对象�
 > 分支：autowired-annotation
 
 @Autowired注解的处理见AutowiredAnnotationBeanPostProcessor#postProcessPropertyValues
+
+## bug fix：没有为代理bean设置属性（discovered and fixed by @kerwin89）
+> 分支: populate-proxy-bean-with-property-values
+
+问题现象：没有为代理bean设置属性
+
+问题原因：织入逻辑在InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation中执行，而该方法如果返回非null，会导致"短路"，不会执行后面的设置属性逻辑。因此如果该方法中返回代理bean后，不会为代理bean设置属性。
+
+修复方案：跟spring保持一致，将织入逻辑迁移到BeanPostProcessor#postProcessAfterInitialization，即将DefaultAdvisorAutoProxyCreator#postProcessBeforeInstantiation的内容迁移到DefaultAdvisorAutoProxyCreator#postProcessAfterInitialization中。
+
+顺便完善spring的扩展机制，为InstantiationAwareBeanPostProcessor增加postProcessAfterInstantiation方法，该方法在bean实例化之后设置属性之前执行。
+
+至此，bean的生命周期比较完整了，如下：
+
+![](./assets/populate-proxy-bean-with-property-values.png)
