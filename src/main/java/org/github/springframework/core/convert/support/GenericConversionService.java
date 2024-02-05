@@ -1,5 +1,6 @@
 package org.github.springframework.core.convert.support;
 
+import cn.hutool.core.convert.BasicType;
 import org.github.springframework.core.convert.ConversionService;
 import org.github.springframework.core.convert.converter.Converter;
 import org.github.springframework.core.convert.converter.ConverterFactory;
@@ -27,6 +28,7 @@ public class GenericConversionService implements ConversionService, ConverterReg
     @Override
     public <T> T convert(Object source, Class<T> targetType) {
         Class<?> sourceType = source.getClass();
+        targetType = (Class<T>) BasicType.wrap(targetType);
         GenericConverter converter = getConverter(sourceType, targetType);
         return (T) converter.convert(source, sourceType, targetType);
     }
@@ -82,6 +84,8 @@ public class GenericConversionService implements ConversionService, ConverterReg
 
     private List<Class<?>> getClassHierarchy(Class<?> clazz) {
         List<Class<?>> hierarchy = new ArrayList<>();
+        //原始类转为包装类
+        clazz = BasicType.wrap(clazz);
         while (clazz != null) {
             hierarchy.add(clazz);
             clazz = clazz.getSuperclass();

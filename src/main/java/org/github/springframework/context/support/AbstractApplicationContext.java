@@ -11,6 +11,7 @@ import org.github.springframework.context.event.ApplicationEventMulticaster;
 import org.github.springframework.context.event.ContextClosedEvent;
 import org.github.springframework.context.event.ContextRefreshedEvent;
 import org.github.springframework.context.event.SimpleApplicationEventMulticaster;
+import org.github.springframework.core.convert.ConversionService;
 import org.github.springframework.core.io.DefaultResourceLoader;
 
 import java.util.Collection;
@@ -23,6 +24,8 @@ import java.util.Map;
 public abstract class AbstractApplicationContext extends DefaultResourceLoader implements ConfigurableApplicationContext {
 
     public static final String APPLICATION_EVENT_MULTICASTER_BEAN_NAME = "applicationEventMulticaster";
+
+    public static final String CONVERSION_SERVICE_BEAN_NAME = "conversionService";
 
     private ApplicationEventMulticaster applicationEventMulticaster;
 
@@ -54,6 +57,24 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
         //发布容器刷新完成事件
         finishRefresh();
+
+        //注册类型转换器和提前实例化单例bean
+        finishBeanFactoryInitialization(beanFactory);
+
+        //发布容器刷新完成事件
+        finishRefresh();
+    }
+    protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
+        //设置类型转换器
+        if (beanFactory.containsBean(CONVERSION_SERVICE_BEAN_NAME)) {
+            Object conversionService = beanFactory.getBean(CONVERSION_SERVICE_BEAN_NAME);
+            if (conversionService instanceof ConversionService) {
+                beanFactory.setConversionService((ConversionService) conversionService);
+            }
+        }
+
+        //提前实例化单例bean
+        beanFactory.preInstantiateSingletons();
     }
 
     /**
@@ -128,26 +149,32 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         return getBeanFactory().getBeansOfType(type);
     }
 
+    @Override
     public <T> T getBean(Class<T> requiredType) throws BeansException {
         return getBeanFactory().getBean(requiredType);
     }
 
+    @Override
     public Object getBean(String name) throws BeansException {
         return getBeanFactory().getBean(name);
     }
 
+    @Override
     public String[] getBeanDefinitionNames() {
         return getBeanFactory().getBeanDefinitionNames();
     }
 
     public abstract ConfigurableListableBeanFactory getBeanFactory();
 
+    @Override
     public void close() {
         doClose();
     }
 
+    @Override
     public void registerShutdownHook() {
         Thread shutdownHook = new Thread() {
+            @Override
             public void run() {
                 doClose();
             }
@@ -167,5 +194,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
     protected void destroyBeans() {
         getBeanFactory().destroySingletons();
+    }
+
+    @Override
+    public boolean containsBean(String name) {
+        return getBeanFactory().containsBean(name);
     }
 }
