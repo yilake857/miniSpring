@@ -8,7 +8,7 @@
 - [《mini-spring》](https://github.com/DerekYRC/mini-spring)
 
 ## 可写在简历上的亮点
-- IOC的流程
+- IOC流程
 - AOP流程
   - 几种常用的Advice：BeforeAdvice/AfterAdvice/AfterReturningAdvice/ThrowsAdvice...
 - 扩展优化
