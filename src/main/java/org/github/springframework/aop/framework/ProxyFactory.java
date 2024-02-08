@@ -6,7 +6,11 @@ import org.github.springframework.aop.AdvisedSupport;
  * @author zhaoyu
  * @date 2024/1/26 21:37
  */
-public class ProxyFactory {
+public class ProxyFactory extends AdvisedSupport{
+
+    public ProxyFactory() {
+    }
+
     private AdvisedSupport advisedSupport;
 
     public ProxyFactory(AdvisedSupport advisedSupport) {
@@ -18,9 +22,9 @@ public class ProxyFactory {
     }
 
     private AopProxy createAopProxy(){
-        if(advisedSupport.isProxyTargetClass()){
-            return new CglibAopProxy(advisedSupport);
+        if (this.isProxyTargetClass()||this.getTargetSource().getTargetClass().length==0) {
+            return new CglibAopProxy(this);
         }
-        return new JdkDynamicAopProxy(advisedSupport);
+        return new JdkDynamicAopProxy(this);
     }
 }

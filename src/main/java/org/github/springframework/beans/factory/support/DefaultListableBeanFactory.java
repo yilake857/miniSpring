@@ -78,7 +78,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 //            getBean(s);
 //        }
         beanDefinitionMap.forEach((beanName, beanDefinition) -> {
-            if(beanDefinition.isSingleton()){
+            if(beanDefinition.isSingleton()&&!beanDefinition.isLazyInit()){
                 getBean(beanName);
             }
         });

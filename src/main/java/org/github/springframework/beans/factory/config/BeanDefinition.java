@@ -29,6 +29,16 @@ public class BeanDefinition {
 
     private boolean prototype = false;
 
+    private boolean lazyInit=false;
+
+    public boolean isLazyInit() {
+        return lazyInit;
+    }
+
+    public void setLazyInit(boolean lazyInit) {
+        this.lazyInit = lazyInit;
+    }
+
     public void setScope(String scope) {
         this.scope = scope;
         this.singleton = SCOPE_SINGLETON.equals(scope);

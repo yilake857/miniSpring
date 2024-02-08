@@ -10,8 +10,8 @@ import org.github.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.github.springframework.aop.framework.CglibAopProxy;
 import org.github.springframework.aop.framework.JdkDynamicAopProxy;
 import org.github.springframework.aop.framework.ProxyFactory;
+import org.github.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor;
 import org.github.springframework.aop.framework.adapter.MethodAfterAdviceInterceptor;
-import org.github.springframework.aop.framework.adapter.MethodAfterReturningAdviceInterceptor;
 import org.github.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,7 +96,7 @@ public class DynamicProxyTest {
     public void testAfterReturningAdvice() throws Exception {
         //设置AfterAdvice
         WorldServiceAfterReturningAdvice afterAdvice = new WorldServiceAfterReturningAdvice();
-        MethodAfterReturningAdviceInterceptor methodInterceptor = new MethodAfterReturningAdviceInterceptor(afterAdvice);
+        AfterReturningAdviceInterceptor methodInterceptor = new AfterReturningAdviceInterceptor(afterAdvice);
         advisedSupport.setMethodInterceptor(methodInterceptor);
 
         WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
